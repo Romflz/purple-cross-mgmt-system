@@ -15,5 +15,36 @@ export const useEmployeeStore = defineStore('employee', () => {
     return Array.from(set).sort()
   })
 
-  return { employees, departments }
+  const updateEmployee = (code: string, updatedData: Partial<Omit<Employee, 'code'>>) => {
+    const employee = employees.value.find((emp) => emp.code === code)
+
+    if (!employee) {
+      console.error(`Employee with code ${code} not found`)
+      return false
+    }
+
+    Object.assign(employee, updatedData)
+
+    return true
+  }
+
+  const deleteEmployee = (code: string) => {
+    const index = employees.value.findIndex((emp) => emp.code === code)
+
+    if (index === -1) {
+      console.error(`Employee with code ${code} not found`)
+      return false
+    }
+
+    employees.value.splice(index, 1)
+
+    return true
+  }
+
+  return {
+    employees,
+    departments,
+    updateEmployee,
+    deleteEmployee,
+  }
 })

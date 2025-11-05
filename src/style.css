@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
+@theme {
+  /*Overrid deafult tailwind font*/
+  --default-font-family: 'Roboto', sans-serif;
+}
+
 .badge {
   @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ring-1 ring-inset;
 }

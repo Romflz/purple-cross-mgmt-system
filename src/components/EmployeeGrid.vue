@@ -31,7 +31,17 @@
 
     <!-- Employee List -->
     <div class="divide-y divide-gray-100">
-      <EmployeeCard v-for="employee in filteredSorted" :key="employee.code" :employee="employee" @view="viewEmployee" @edit="editEmployee" @delete="deleteEmployee" />
+      <EmployeeCard v-for="employee in paginatedEmployees" :key="employee.code" :employee="employee" @view="viewEmployee" @edit="editEmployee" @delete="deleteEmployee" />
+    </div>
+
+    <!-- Show More Button -->
+    <div v-if="hasMore" class="px-6 py-4 border-t border-gray-100">
+      <button
+        @click="showMore"
+        class="w-full px-4 py-2.5 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      >
+        Show More ({{ remainingCount }} remaining)
+      </button>
     </div>
 
     <!-- Empty State -->
@@ -59,9 +69,11 @@
     </div>
 
     <!-- Footer with count -->
-    <div v-if="filteredSorted.length > 0" class="px-6 py-3 bg-gray-50 border-t border-gray-200">
+    <div v-if="paginatedEmployees.length > 0" class="px-6 py-3 bg-gray-50 border-t border-gray-200">
       <p class="text-sm text-gray-600">
-        Showing <span class="font-medium text-gray-900">{{ filteredSorted.length }}</span> employee{{ filteredSorted.length !== 1 ? 's' : '' }}
+        Showing <span class="font-medium text-gray-900">{{ paginatedEmployees.length }}</span> of
+        <span class="font-medium text-gray-900">{{ filteredSorted.length }}</span>
+        employee{{ filteredSorted.length !== 1 ? 's' : '' }}
       </p>
     </div>
     <div v-else>
@@ -71,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import EmployeeCard from './EmployeeCard.vue'
 import EmployeeFilters from './FilterControls.vue'
 import { useEmployeeStore } from '@/store/employee'
@@ -86,6 +98,10 @@ const filterDepartment = ref<'all' | string>('all')
 const filterTerminated = ref<'all' | 'yes' | 'no'>('all')
 const sortBy = ref<'name' | 'start' | 'termination' | 'department' | 'status'>('name')
 const sortDir = ref<'asc' | 'desc'>('asc')
+
+// ---- Pagination Control ----
+const currentPage = ref(1)
+const pageSize = ref(20)
 
 // ---- Departments list derived from store ----
 const departments = employeeStore.departments
@@ -135,15 +151,43 @@ const filteredSorted = computed(() => {
   return rows
 })
 
+// ---- Paginated Slice  ----
+const paginatedEmployees = computed(() => {
+  const start = 0
+  const end = currentPage.value * pageSize.value
+  return filteredSorted.value.slice(start, end)
+})
+
+// ---- Pagination Helpers ----
+const hasMore = computed(() => {
+  return paginatedEmployees.value.length < filteredSorted.value.length
+})
+
+const remainingCount = computed(() => {
+  return filteredSorted.value.length - paginatedEmployees.value.length
+})
+
+function showMore() {
+  if (hasMore.value) {
+    currentPage.value++
+  }
+}
+
+// Reset to page 1 when any filter changes
+watch([search, filterDepartment, filterTerminated, sortBy, sortDir], () => {
+  currentPage.value = 1
+})
+
 function resetFilters() {
   search.value = ''
   filterDepartment.value = 'all'
   filterTerminated.value = 'all'
   sortBy.value = 'name'
   sortDir.value = 'asc'
+  currentPage.value = 1
 }
 
-// ---- existing handlers
+// ---- existing handlers ----
 const viewEmployee = (employeeCode: string) => {
   console.log('View employee:', employeeCode)
 }

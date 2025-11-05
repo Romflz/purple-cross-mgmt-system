@@ -5,6 +5,7 @@ import HomePage from '@/pages/DashboardPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import ExportPage from '@/pages/ExportPage.vue'
 import ProfilePage from '@/pages/ProfilePage.vue'
+import EmployeePage from '@/pages/EmployeePage.vue'
 
 // By defualt, we always need auth, except login page
 const routes = [
@@ -21,9 +22,13 @@ const routes = [
     path: '/import-export',
     component: ExportPage,
   },
-   {
+  {
     path: '/profile',
     component: ProfilePage,
+  },
+  {
+    path: '/employee/:id',
+    component: EmployeePage,
   },
 ]
 

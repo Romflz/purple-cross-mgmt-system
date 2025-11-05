@@ -89,8 +89,10 @@ import EmployeeFilters from './FilterControls.vue'
 import { useEmployeeStore } from '@/store/employee'
 import { getStatus } from '@/helpers'
 import type { EmployeeStatus } from '@/types/employee'
+import { useRouter } from 'vue-router'
 
 const employeeStore = useEmployeeStore()
+const router = useRouter()
 
 // ---- Filter Control ----
 const search = ref('')
@@ -189,11 +191,16 @@ function resetFilters() {
 
 // ---- existing handlers ----
 const viewEmployee = (employeeCode: string) => {
-  console.log('View employee:', employeeCode)
+  router.push(`/employee/${employeeCode}`)
 }
+
 const editEmployee = (employeeCode: string) => {
-  console.log('Edit employee:', employeeCode)
+  router.push({
+    path: `/employee/${employeeCode}`,
+    query: { edit: 'true' }, // For future use, if we need a nested route here, it would be best to pass as state or similar
+  })
 }
+
 const deleteEmployee = (employeeCode: string) => {
   console.log('Delete employee:', employeeCode)
 }

@@ -4,6 +4,11 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "types": ["vite/client"],
 
+    // Remove baseUrl for future TypeScript 7 supprt as per https://github.com/microsoft/TypeScript/issues/62207 discussion
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

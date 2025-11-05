@@ -3,6 +3,8 @@ import { useAuthStore } from '@/store/auth'
 
 import HomePage from '@/pages/HomePage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
+import ExportPage from '@/pages/ExportPage.vue'
+import ProfilePage from '@/pages/ProfilePage.vue'
 
 // By defualt, we always need auth, except login page
 const routes = [
@@ -14,6 +16,14 @@ const routes = [
     path: '/login',
     component: LoginPage,
     meta: { requiresAuth: false },
+  },
+  {
+    path: '/import-export',
+    component: ExportPage,
+  },
+   {
+    path: '/profile',
+    component: ProfilePage,
   },
 ]
 

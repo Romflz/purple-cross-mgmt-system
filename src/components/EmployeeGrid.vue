@@ -76,6 +76,7 @@ import EmployeeCard from './EmployeeCard.vue'
 import EmployeeFilters from './FilterControls.vue'
 import { useEmployeeStore } from '@/store/employee'
 import { getStatus } from '@/helpers'
+import type { EmployeeStatus } from '@/types/employee'
 
 const employeeStore = useEmployeeStore()
 
@@ -125,7 +126,7 @@ const filteredSorted = computed(() => {
         return (ta > tb ? 1 : -1) * dir
       }
       case 'status': {
-        const order = ['active', 'leaving', 'starting', 'inactive', 'left']
+        const order = ['active', 'leaving', 'starting', 'inactive', 'left'] satisfies EmployeeStatus[]
         return (order.indexOf(getStatus(a)) - order.indexOf(getStatus(b))) * dir
       }
     }

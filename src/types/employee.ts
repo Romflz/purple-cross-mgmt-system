@@ -8,3 +8,5 @@ export interface Employee {
   dateOfEmployment: ISODate
   terminationDate: ISODate | null
 }
+
+export type EmployeeStatus = 'starting' | 'active' | 'inactive' | 'leaving' | 'left'

@@ -1,3 +1,5 @@
+import type { Employee } from '@/types/employee'
+
 const isDateInFuture = (endOfEmploymentDate: string) => {
   return new Date(endOfEmploymentDate) > new Date()
 }
@@ -19,4 +21,16 @@ const getInitials = (name: string) => {
     .slice(0, 2)
 }
 
-export { isDateInFuture, formatDate, getInitials }
+function getStatus(e: Employee): 'starting' | 'active' | 'inactive' | 'leaving' | 'left' {
+  const startFuture = isDateInFuture(e.dateOfEmployment)
+  const hasEnd = !!e.terminationDate
+  const endFuture = hasEnd && isDateInFuture(e.terminationDate!)
+  const ended = hasEnd && !endFuture
+
+  if (startFuture) return 'starting'
+  if (ended) return 'inactive'
+  if (endFuture) return 'leaving'
+  return 'active'
+}
+
+export { isDateInFuture, formatDate, getInitials, getStatus }

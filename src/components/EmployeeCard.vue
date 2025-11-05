@@ -132,7 +132,7 @@ import type { Employee } from '@/types/employee'
 import EyeIcon from '@/icons/eye.svg'
 import PencilIcon from '@/icons/pencil.svg'
 import TrashIcon from '@/icons/trash.svg'
-import { formatDate, isDateInFuture, getInitials } from '@/helpers'
+import { formatDate, isDateInFuture, getInitials, getStatus } from '@/helpers'
 
 interface Props {
   employee: Employee
@@ -142,13 +142,9 @@ const props = defineProps<Props>()
 defineEmits<{ view: [string]; edit: [string]; delete: [string] }>()
 
 const employment = computed(() => {
-  const startFuture = isDateInFuture(props.employee.dateOfEmployment)
-  const hasEnd = !!props.employee.terminationDate
-  const endFuture = hasEnd && isDateInFuture(props.employee.terminationDate!)
-  const ended = hasEnd && !endFuture
-
-  if (startFuture) return { label: 'Starting Soon', class: 'badge badge--starting' }
-  if (ended) return { label: 'Inactive', class: 'badge badge--inactive' }
+  const status = getStatus(props.employee)
+  if (status == 'starting') return { label: 'Starting Soon', class: 'badge badge--starting' }
+  if (status == 'inactive') return { label: 'Inactive', class: 'badge badge--inactive' }
   return { label: 'Active', class: 'badge badge--active' }
 })
 

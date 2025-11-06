@@ -36,8 +36,6 @@ export const useEmployeeStore = defineStore('employee', () => {
     const exists = employees.value.some((emp) => emp.code === data.code)
 
     if (exists) {
-      // TODO: Show error modal
-      console.error(`Employee with code ${data.code} already exists`)
       return {
         success: false,
         error: `Employee with code ${data.code} already exists`,

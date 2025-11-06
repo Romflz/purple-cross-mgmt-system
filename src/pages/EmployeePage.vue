@@ -1,8 +1,8 @@
 <template>
   <DefaultLayout>
     <template v-if="error">
-      <div>
-        <p>{{ error }}</p>
+      <div class="alert-warning w-full p-6 sticky top-16 shadow-lg animate-slide-down">
+        <p class="text-yellow-800 font-medium">{{ error }}</p>
       </div>
     </template>
     <template v-if="!employee && mode !== 'create'">

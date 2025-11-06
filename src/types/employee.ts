@@ -1,4 +1,5 @@
-export type ISODate = `${number}${number}${number}${number}-${number}${number}-${number}${number}`
+export type ISODate =
+  `${number}${number}${number}${number}-${number}${number}-${number}${number}`
 
 export interface Employee {
   code: string
@@ -9,12 +10,20 @@ export interface Employee {
   terminationDate: ISODate | null
 }
 
-export type EmployeeStatus = 'starting' | 'active' | 'inactive' | 'leaving' | 'left'
+export type EmployeeStatus =
+  | 'starting'
+  | 'active'
+  | 'inactive'
+  | 'leaving'
+  | 'left'
 
 export interface EmployeeFormData {
+  code: string,
   fullName: string
   occupation: string
   department: string
   dateOfEmployment: ISODate
   terminationDate: ISODate | null
 }
+
+export type Modes = 'view' | 'edit' | 'create'

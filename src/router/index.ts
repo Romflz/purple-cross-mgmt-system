@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, type RouteRecordRaw, type RouteLocationNormalized } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import { useAuthStore } from '@/store/auth'
 
 import HomePage from '@/pages/DashboardPage.vue'
@@ -29,20 +29,28 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/employee/create',
     component: EmployeePage,
-    props: { mode: 'create' }
+    props: { mode: 'create' },
+  },
+  {
+    path: '/employee/:id/edit',
+    component: EmployeePage,
+    props: { mode: 'edit' },
   },
   {
     path: '/employee/:id',
     component: EmployeePage,
-    props: (route: RouteLocationNormalized) => ({
-      mode: route.query.edit === 'true' ? 'edit' : 'view'
-    })
+    props: { mode: 'view' },
   },
 ]
 
 export const router = createRouter({
   history: createWebHistory(),
   routes,
+  // This will reset the scroll position when we change routes if we scroll from previous route
+  // Just a small nice UX
+  scrollBehavior() {
+    return { top: 0 }
+  },
 })
 
 // Check authentication before each route

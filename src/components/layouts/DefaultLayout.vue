@@ -1,7 +1,9 @@
 <template>
   <div>
-    <Header />
-    <slot />
+    <Header></Header>
+    <div class="max-w-7xl mx-auto">
+      <slot></slot>
+    </div>
   </div>
 </template>
 

@@ -31,8 +31,24 @@ export const useEmployeeStore = defineStore('employee', () => {
     return true
   }
 
-  const createEmployee = (data: any) => {}
+  const createEmployee = (data: Employee) => {
+    // Check if employee with this code already exists
+    const exists = employees.value.some((emp) => emp.code === data.code)
 
+    if (exists) {
+      // TODO: Show error modal
+      console.error(`Employee with code ${data.code} already exists`)
+      return {
+        success: false,
+        error: `Employee with code ${data.code} already exists`,
+      }
+    }
+
+    employees.value.push(data)
+    return {
+      success: true,
+    }
+  }
   const deleteEmployee = (code: string) => {
     const index = employees.value.findIndex((emp) => emp.code === code)
 
@@ -51,6 +67,6 @@ export const useEmployeeStore = defineStore('employee', () => {
     departments,
     updateEmployee,
     deleteEmployee,
-    createEmployee
+    createEmployee,
   }
 })

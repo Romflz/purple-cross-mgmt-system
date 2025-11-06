@@ -195,10 +195,7 @@ const viewEmployee = (employeeCode: string) => {
 }
 
 const editEmployee = (employeeCode: string) => {
-  router.push({
-    path: `/employee/${employeeCode}`,
-    query: { edit: 'true' }, // For future use, if we need a nested route here, it would be best to pass as state or similar
-  })
+  router.push(`/employee/${employeeCode}/edit`)
 }
 
 const deleteEmployee = (employeeCode: string) => {

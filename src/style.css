@@ -1,30 +1,103 @@
 @import 'tailwindcss';
 
 @theme {
-  /*Overrid deafult tailwind font*/
+  /* Override default Tailwind font */
   --default-font-family: 'Roboto', sans-serif;
 }
 
-.badge {
+/* Reusable utilities */
+@utility badge {
   @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ring-1 ring-inset;
 }
+@utility input-base {
+  @apply w-full px-4 py-2.5 border rounded-lg transition-all;
+}
+@utility btn-base {
+  @apply w-full sm:w-auto px-6 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all font-semibold shadow-sm flex items-center justify-center gap-2;
+}
 
+/* Badges */
 .badge--active {
-  @apply bg-green-100 text-green-800 ring-green-600/20;
+  @apply badge bg-green-100 text-green-800 ring-green-600/20;
 }
-
 .badge--inactive {
-  @apply bg-gray-100 text-gray-800 ring-gray-600/20;
+  @apply badge bg-gray-100  text-gray-800  ring-gray-600/20;
 }
-
 .badge--starting {
-  @apply bg-blue-100 text-blue-800 ring-blue-600/20;
+  @apply badge bg-blue-100  text-blue-800  ring-blue-600/20;
 }
-
 .badge--leaving {
-  @apply bg-amber-100 text-amber-800 ring-amber-600/20;
+  @apply badge bg-amber-100 text-amber-800 ring-amber-600/20;
+}
+.badge--left {
+  @apply badge bg-red-100   text-red-800   ring-red-600/20;
 }
 
-.badge--left {
-  @apply bg-red-100 text-red-800 ring-red-600/20;
+/* Alerts */
+.alert-warning {
+  @apply bg-yellow-50 border-l-4 border-yellow-400 rounded-lg p-4;
+}
+
+/* Cards */
+.card {
+  @apply bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden;
+}
+
+/* Form Fields */
+.field-container {
+  @apply bg-gray-50 rounded-lg p-4 border border-gray-200;
+}
+.field-label {
+  @apply block text-sm font-semibold text-gray-700 mb-2;
+}
+
+/* Inputs */
+.input-editable {
+  @apply input-base border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white;
+}
+.input-readonly {
+  @apply input-base border-gray-200 bg-gray-50 text-gray-700 cursor-default;
+}
+.input-code-editable {
+  @apply input-base font-mono text-lg border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white;
+}
+.input-code-readonly {
+  @apply input-base font-mono text-lg border-gray-300 bg-white text-gray-500 cursor-not-allowed;
+}
+
+/* Termination Date Container & Inputs */
+.termination-container {
+  @apply bg-red-50 rounded-lg p-4 border border-red-200;
+}
+.input-termination-editable {
+  @apply flex-1 px-4 py-2.5 border rounded-lg transition-all border-red-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white;
+}
+.input-termination-readonly {
+  @apply flex-1 px-4 py-2.5 border rounded-lg transition-all border-red-200 bg-red-50 text-gray-700 cursor-default;
+}
+
+/* Buttons */
+.btn-primary {
+  @apply btn-base bg-blue-600  text-white hover:bg-blue-700  focus:ring-blue-500;
+}
+.btn-success {
+  @apply btn-base bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+}
+.btn-secondary {
+  @apply btn-base bg-gray-100  text-gray-700 hover:bg-gray-200 focus:ring-gray-500;
+}
+.btn-danger {
+  @apply btn-base bg-red-600   text-white hover:bg-red-700   focus:ring-red-500;
+}
+
+.btn-danger-small {
+  @apply px-4 py-2 w-full md:w-24 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all font-medium shadow-sm;
+}
+
+/* Action Button Containers */
+.action-buttons {
+  @apply flex flex-col sm:flex-row gap-3 pt-6 mt-6 border-t border-gray-200;
+}
+.action-buttons-edit {
+  @apply flex flex-col sm:flex-row sm:justify-between gap-3 pt-6 mt-6 border-t border-gray-200;
 }

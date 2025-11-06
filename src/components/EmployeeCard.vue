@@ -143,14 +143,14 @@ defineEmits<{ view: [string]; edit: [string]; delete: [string] }>()
 
 const employment = computed(() => {
   const status = getStatus(props.employee)
-  if (status == 'starting') return { label: 'Starting Soon', class: 'badge badge--starting' }
+  if (status == 'starting') return { label: 'Employed Soon', class: 'badge badge--starting' }
   if (status == 'inactive') return { label: 'Inactive', class: 'badge badge--inactive' }
-  return { label: 'Active', class: 'badge badge--active' }
+  return { label: 'Currently Employed', class: 'badge badge--active' }
 })
 
 const termination = computed(() => {
   const end = props.employee.terminationDate
   if (!end) return null
-  return isDateInFuture(end) ? { label: 'Leaving', class: 'badge badge--leaving' } : { label: 'Left', class: 'badge badge--left' }
+  return isDateInFuture(end) ? { label: 'To Be Terminated', class: 'badge badge--leaving' } : { label: 'Terminated', class: 'badge badge--left' }
 })
 </script>

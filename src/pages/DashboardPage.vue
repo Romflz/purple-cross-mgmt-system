@@ -5,7 +5,7 @@
     <!-- Floating Add Button -->
     <button
       @click="addEmployee"
-      class="fixed bottom-6 left-6 w-14 h-14 bg-blue-600 hover:bg-blue-700 cursor-pointer text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center group"
+      class="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 hover:bg-blue-700 cursor-pointer text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center group"
       aria-label="Add Employee"
     >
       <PlusIcon class="w-6 h-6 group-hover:scale-110 transition-transform" />

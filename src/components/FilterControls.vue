@@ -10,7 +10,7 @@
 
     <select :value="department" @change="$emit('update:department', ($event.target as HTMLSelectElement).value)" class="px-3 py-2 border border-gray-300 rounded-lg text-sm w-full">
       <option value="all">All departments</option>
-      <option v-for="d in departments" :key="d" :value="d">{{ d }}</option>
+      <option v-for="d in employeeStore.departments" :key="d" :value="d">{{ d }}</option>
     </select>
 
     <select :value="terminated" @change="$emit('update:terminated', ($event.target as HTMLSelectElement).value)" class="px-3 py-2 border border-gray-300 rounded-lg text-sm w-full">
@@ -37,13 +37,15 @@
 </template>
 
 <script setup lang="ts">
+import { useEmployeeStore } from '@/store/employee'
+const employeeStore = useEmployeeStore();
+
 defineProps<{
   search: string
   department: string
   terminated: string
   sortBy: string
   sortDir: string
-  departments: string[]
 }>()
 
 defineEmits<{

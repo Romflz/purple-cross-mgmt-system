@@ -15,7 +15,6 @@
           v-model:terminated="filterTerminated"
           v-model:sortBy="sortBy"
           v-model:sortDir="sortDir"
-          :departments="departments"
           @reset="resetFilters"
         />
       </div>
@@ -147,9 +146,6 @@ const sortDir = ref<'asc' | 'desc'>('asc')
 // ---- Pagination Control ----
 const currentPage = ref(1)
 const pageSize = ref(20)
-
-// ---- Departments list derived from store ----
-const departments = employeeStore.departments
 
 const filteredSorted = computed(() => {
   let rows = employeeStore.employees.slice() // clone so sort doesn't mutate store

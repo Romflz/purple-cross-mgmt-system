@@ -9,7 +9,7 @@
       <div class="alert-warning mt-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between gap-4">
           <p class="text-yellow-800 font-medium">Employee not found ( ͡° ͜ʖ ͡°)</p>
-          <button class="btn-secondary">Go home</button>
+          <button class="btn-secondary" @click="goHome">Go home</button>
         </div>
       </div>
     </template>
@@ -39,6 +39,8 @@
 import { useRoute, useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
 import { useEmployeeStore } from '@/store/employee'
+import { useModalStore } from '@/store/modal'
+
 import CreateEmployeeForm from '@/components/forms/CreateEmployeeForm.vue'
 import DefaultLayout from '@/components/layouts/DefaultLayout.vue'
 import EditViewEmployeeForm from '@/components/forms/EditViewEmployeeForm.vue'
@@ -48,7 +50,7 @@ const props = defineProps<{
   mode: Modes
 }>()
 
-console.log('mode', props)
+const modalStore = useModalStore()
 const route = useRoute()
 const router = useRouter()
 const employeeStore = useEmployeeStore()
@@ -84,10 +86,16 @@ const saveEmployee = (data: EmployeeFormData) => {
   }
 }
 
-const deleteEmployee = (employeeCode: string) => {
-  // TODO: Alert confirm modal
-  employeeStore.deleteEmployee(employeeCode)
-  goHome()
+const deleteEmployee = async (employeeCode: string) => {
+  const confirmed = await modalStore.openConfirm({
+    title: 'Delete Item',
+    message: `Are you sure you want to delete Employee: ${employeeCode}? This action cannot be undone.`,
+  })
+
+  if (confirmed) {
+    employeeStore.deleteEmployee(employeeCode)
+    goHome()
+  }
 }
 
 // Cancel editing

@@ -4,7 +4,9 @@
     <div class="border-b border-gray-200">
       <div class="px-6 py-4">
         <h2 class="text-lg font-semibold text-gray-900">Employee Management</h2>
-        <p class="text-sm text-gray-600 mt-1">Manage your team members and their information</p>
+        <p class="text-sm text-gray-600 mt-1">
+          Manage your team members and their information
+        </p>
 
         <!-- Filter Controls -->
         <EmployeeFilters
@@ -20,7 +22,9 @@
     </div>
 
     <!-- Column Headers - Desktop Only -->
-    <div class="hidden lg:grid lg:grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-600 uppercase tracking-wider">
+    <div
+      class="hidden lg:grid lg:grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-600 uppercase tracking-wider"
+    >
       <div class="col-span-3">Employee</div>
       <div class="col-span-2">Occupation</div>
       <div class="col-span-2">Department</div>
@@ -31,7 +35,14 @@
 
     <!-- Employee List -->
     <div class="divide-y divide-gray-100">
-      <EmployeeCard v-for="employee in paginatedEmployees" :key="employee.code" :employee="employee" @view="viewEmployee" @edit="editEmployee" @delete="deleteEmployee" />
+      <EmployeeCard
+        v-for="employee in paginatedEmployees"
+        :key="employee.code"
+        :employee="employee"
+        @view="viewEmployee"
+        @edit="editEmployee"
+        @delete="deleteEmployee"
+      />
     </div>
 
     <!-- Show More Button -->
@@ -47,7 +58,12 @@
     <!-- Empty State -->
     <div v-if="employeeStore.employees.length === 0" class="px-6 py-16">
       <div class="text-center">
-        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg
+          class="mx-auto h-12 w-12 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -55,13 +71,27 @@
             d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
           />
         </svg>
-        <h3 class="mt-4 text-lg font-medium text-gray-900">No employees found</h3>
-        <p class="mt-2 text-sm text-gray-500">Get started by adding your first team member</p>
+        <h3 class="mt-4 text-lg font-medium text-gray-900">
+          No employees found
+        </h3>
+        <p class="mt-2 text-sm text-gray-500">
+          Get started by adding your first team member
+        </p>
         <button
           class="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
         >
-          <svg class="mr-2 -ml-1 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          <svg
+            class="mr-2 -ml-1 h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
           </svg>
           Add Employee
         </button>
@@ -69,10 +99,19 @@
     </div>
 
     <!-- Footer with count -->
-    <div v-if="paginatedEmployees.length > 0" class="px-6 py-3 bg-gray-50 border-t border-gray-200">
+    <div
+      v-if="paginatedEmployees.length > 0"
+      class="px-6 py-3 bg-gray-50 border-t border-gray-200"
+    >
       <p class="text-sm text-gray-600">
-        Showing <span class="font-medium text-gray-900">{{ paginatedEmployees.length }}</span> of
-        <span class="font-medium text-gray-900">{{ filteredSorted.length }}</span>
+        Showing
+        <span class="font-medium text-gray-900">{{
+          paginatedEmployees.length
+        }}</span>
+        of
+        <span class="font-medium text-gray-900">{{
+          filteredSorted.length
+        }}</span>
         employee{{ filteredSorted.length !== 1 ? 's' : '' }}
       </p>
     </div>
@@ -87,10 +126,12 @@ import { ref, computed, watch } from 'vue'
 import EmployeeCard from './EmployeeCard.vue'
 import EmployeeFilters from './FilterControls.vue'
 import { useEmployeeStore } from '@/store/employee'
+import { useModalStore } from '@/store/modal'
 import { getStatus } from '@/helpers'
 import type { EmployeeStatus } from '@/types/employee'
 import { useRouter } from 'vue-router'
 
+const modalStore = useModalStore()
 const employeeStore = useEmployeeStore()
 const router = useRouter()
 
@@ -98,7 +139,9 @@ const router = useRouter()
 const search = ref('')
 const filterDepartment = ref<'all' | string>('all')
 const filterTerminated = ref<'all' | 'yes' | 'no'>('all')
-const sortBy = ref<'name' | 'start' | 'termination' | 'department' | 'status'>('name')
+const sortBy = ref<'name' | 'start' | 'termination' | 'department' | 'status'>(
+  'name'
+)
 const sortDir = ref<'asc' | 'desc'>('asc')
 
 // ---- Pagination Control ----
@@ -114,7 +157,10 @@ const filteredSorted = computed(() => {
   // Search by name or code
   if (search.value.trim()) {
     const q = search.value.trim().toLowerCase()
-    rows = rows.filter((e) => e.fullName.toLowerCase().includes(q) || e.code.toLowerCase().includes(q))
+    rows = rows.filter(
+      (e) =>
+        e.fullName.toLowerCase().includes(q) || e.code.toLowerCase().includes(q)
+    )
   }
 
   // Department filter
@@ -124,7 +170,11 @@ const filteredSorted = computed(() => {
 
   // Terminated filter
   if (filterTerminated.value !== 'all') {
-    rows = rows.filter((e) => (filterTerminated.value === 'yes' ? !!e.terminationDate : !e.terminationDate))
+    rows = rows.filter((e) =>
+      filterTerminated.value === 'yes'
+        ? !!e.terminationDate
+        : !e.terminationDate
+    )
   }
 
   // Sort
@@ -144,7 +194,13 @@ const filteredSorted = computed(() => {
         return (ta > tb ? 1 : -1) * dir
       }
       case 'status': {
-        const order = ['active', 'leaving', 'starting', 'inactive', 'left'] satisfies EmployeeStatus[]
+        const order = [
+          'active',
+          'leaving',
+          'starting',
+          'inactive',
+          'left',
+        ] satisfies EmployeeStatus[]
         return (order.indexOf(getStatus(a)) - order.indexOf(getStatus(b))) * dir
       }
     }
@@ -198,7 +254,14 @@ const editEmployee = (employeeCode: string) => {
   router.push(`/employee/${employeeCode}/edit`)
 }
 
-const deleteEmployee = (employeeCode: string) => {
-  console.log('Delete employee:', employeeCode)
+const deleteEmployee = async (employeeCode: string) => {
+  const confirmed = await modalStore.openConfirm({
+    title: 'Delete Item',
+    message: `Are you sure you want to delete Employee: ${employeeCode}? This action cannot be undone.`,
+  })
+
+  if (confirmed) {
+    employeeStore.deleteEmployee(employeeCode)
+  }
 }
 </script>

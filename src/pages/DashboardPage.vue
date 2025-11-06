@@ -14,12 +14,15 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import DefaultLayout from '@/components/layouts/DefaultLayout.vue'
 import EmployeeGrid from '@/components/EmployeeGrid.vue'
 
 import PlusIcon from '@/icons/plus.svg'
 
+const router = useRouter()
+
 const addEmployee = () => {
-  console.log('Add employee clicked')
+  router.push('/employee/create')
 }
 </script>

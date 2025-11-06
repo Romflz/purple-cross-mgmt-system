@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordRaw, type RouteLocationNormalized } from 'vue-router'
 import { useAuthStore } from '@/store/auth'
 
 import HomePage from '@/pages/DashboardPage.vue'
@@ -7,8 +7,8 @@ import ExportPage from '@/pages/ExportPage.vue'
 import ProfilePage from '@/pages/ProfilePage.vue'
 import EmployeePage from '@/pages/EmployeePage.vue'
 
-// By defualt, we always need auth, except login page
-const routes = [
+// By default, we always need auth, except login page
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: HomePage,
@@ -27,8 +27,16 @@ const routes = [
     component: ProfilePage,
   },
   {
+    path: '/employee/create',
+    component: EmployeePage,
+    props: { mode: 'create' }
+  },
+  {
     path: '/employee/:id',
     component: EmployeePage,
+    props: (route: RouteLocationNormalized) => ({
+      mode: route.query.edit === 'true' ? 'edit' : 'view'
+    })
   },
 ]
 

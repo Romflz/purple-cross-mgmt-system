@@ -1,6 +1,14 @@
 <template>
   <DefaultLayout>
-    <EmployeeForm :employee="employee" :is-edit-mode="isEditMode" @delete="deleteEmployee" @save="saveEmployee" @cancel="cancelEdit" @edit="goToEditMode" @back="goBack" />
+    <EmployeeForm
+      :employee="employee"
+      :is-edit-mode="isEditMode"
+      @delete="deleteEmployee"
+      @save="saveEmployee"
+      @cancel="cancelEdit"
+      @edit="goToEditMode"
+      @back="goBack"
+    />
   </DefaultLayout>
 </template>
 
@@ -21,7 +29,9 @@ const employeeId = computed(() => route.params.id as string)
 const isEditMode = computed(() => route.query.edit === 'true')
 
 // Find employee from store
-const employee = computed(() => employeeStore.employees.find((emp) => emp.code === employeeId.value))
+const employee = computed(() =>
+  employeeStore.employees.find((emp) => emp.code === employeeId.value)
+)
 
 // Save employee changes
 const saveEmployee = (data: EmployeeFormData) => {

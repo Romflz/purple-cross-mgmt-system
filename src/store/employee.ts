@@ -15,7 +15,10 @@ export const useEmployeeStore = defineStore('employee', () => {
     return Array.from(set).sort()
   })
 
-  const updateEmployee = (code: string, updatedData: Partial<Omit<Employee, 'code'>>) => {
+  const updateEmployee = (
+    code: string,
+    updatedData: Partial<Omit<Employee, 'code'>>
+  ) => {
     const employee = employees.value.find((emp) => emp.code === code)
 
     if (!employee) {
@@ -27,6 +30,8 @@ export const useEmployeeStore = defineStore('employee', () => {
 
     return true
   }
+
+  const createEmployee = (data: any) => {}
 
   const deleteEmployee = (code: string) => {
     const index = employees.value.findIndex((emp) => emp.code === code)
@@ -46,5 +51,6 @@ export const useEmployeeStore = defineStore('employee', () => {
     departments,
     updateEmployee,
     deleteEmployee,
+    createEmployee
   }
 })

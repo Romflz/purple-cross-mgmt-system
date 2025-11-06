@@ -4,23 +4,38 @@
     <div class="mb-8">
       <h1 class="text-2xl font-bold text-gray-800 mb-2">Employee Details</h1>
       <div class="flex items-center gap-2">
-        <div :class="['px-3 py-1 rounded-full text-sm font-medium', isEditMode ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-700']">
+        <div
+          :class="[
+            'px-3 py-1 rounded-full text-sm font-medium',
+            isEditMode
+              ? 'bg-blue-100 text-blue-700'
+              : 'bg-gray-100 text-gray-700',
+          ]"
+        >
           {{ isEditMode ? 'Edit Mode' : 'View Mode' }}
         </div>
       </div>
     </div>
 
     <!-- Loading State -->
-    <div v-if="!employee" class="bg-yellow-50 border-l-4 border-yellow-400 rounded-lg p-4">
+    <div
+      v-if="!employee"
+      class="bg-yellow-50 border-l-4 border-yellow-400 rounded-lg p-4"
+    >
       <div class="flex items-center">
         <p class="text-yellow-800 font-medium">Employee not found ( ͡° ͜ʖ ͡°)</p>
       </div>
     </div>
 
     <!-- Employee Form/View -->
-    <div v-else class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+    <div
+      v-else
+      class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden"
+    >
       <!-- Card Header -->
-      <div class="bg-linear-to-r from-blue-600 via-blue-700 to-indigo-700 px-6 py-4">
+      <div
+        class="bg-linear-to-r from-blue-600 via-blue-700 to-indigo-700 px-6 py-4"
+      >
         <h2 class="text-xl font-semibold text-white">Employee Information</h2>
       </div>
 
@@ -28,7 +43,9 @@
         <div class="space-y-6">
           <!-- Employee Code (Always Readonly) -->
           <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Employee Code</label>
+            <label class="block text-sm font-semibold text-gray-700 mb-2"
+              >Employee Code</label
+            >
             <input
               type="text"
               :value="employee.code"
@@ -41,14 +58,18 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Full Name -->
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name <span class="text-red-500">*</span> </label>
+              <label class="block text-sm font-semibold text-gray-700 mb-2"
+                >Full Name <span class="text-red-500">*</span>
+              </label>
               <input
                 v-model="formData.fullName"
                 type="text"
                 :readonly="!isEditMode"
                 :class="[
                   'w-full px-4 py-2.5 border rounded-lg transition-all',
-                  isEditMode ? 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white' : 'border-gray-200 bg-gray-50 text-gray-700 cursor-default',
+                  isEditMode
+                    ? 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white'
+                    : 'border-gray-200 bg-gray-50 text-gray-700 cursor-default',
                 ]"
                 required
               />
@@ -56,14 +77,18 @@
 
             <!-- Occupation -->
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-2">Occupation<span class="text-red-500">*</span> </label>
+              <label class="block text-sm font-semibold text-gray-700 mb-2"
+                >Occupation<span class="text-red-500">*</span>
+              </label>
               <input
                 v-model="formData.occupation"
                 type="text"
                 :readonly="!isEditMode"
                 :class="[
                   'w-full px-4 py-2.5 border rounded-lg transition-all',
-                  isEditMode ? 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white' : 'border-gray-200 bg-gray-50 text-gray-700 cursor-default',
+                  isEditMode
+                    ? 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white'
+                    : 'border-gray-200 bg-gray-50 text-gray-700 cursor-default',
                 ]"
                 required
               />
@@ -71,14 +96,18 @@
 
             <!-- Department -->
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-2">Department <span class="text-red-500">*</span> </label>
+              <label class="block text-sm font-semibold text-gray-700 mb-2"
+                >Department <span class="text-red-500">*</span>
+              </label>
               <input
                 v-model="formData.department"
                 type="text"
                 :readonly="!isEditMode"
                 :class="[
                   'w-full px-4 py-2.5 border rounded-lg transition-all',
-                  isEditMode ? 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white' : 'border-gray-200 bg-gray-50 text-gray-700 cursor-default',
+                  isEditMode
+                    ? 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white'
+                    : 'border-gray-200 bg-gray-50 text-gray-700 cursor-default',
                 ]"
                 required
               />
@@ -86,14 +115,18 @@
 
             <!-- Date of Employment -->
             <div>
-              <label class="block text-sm font-semibold text-gray-700 mb-2">Date of Employment <span class="text-red-500">*</span> </label>
+              <label class="block text-sm font-semibold text-gray-700 mb-2"
+                >Date of Employment <span class="text-red-500">*</span>
+              </label>
               <input
                 v-model="formData.dateOfEmployment"
                 type="date"
                 :readonly="!isEditMode"
                 :class="[
                   'w-full px-4 py-2.5 border rounded-lg transition-all',
-                  isEditMode ? 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white' : 'border-gray-200 bg-gray-50 text-gray-700 cursor-default',
+                  isEditMode
+                    ? 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white'
+                    : 'border-gray-200 bg-gray-50 text-gray-700 cursor-default',
                 ]"
                 required
               />
@@ -102,7 +135,9 @@
 
           <!-- Termination Date (Full Width) -->
           <div class="bg-red-50 rounded-lg p-4 border border-red-200">
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Termination Date </label>
+            <label class="block text-sm font-semibold text-gray-700 mb-2"
+              >Termination Date
+            </label>
             <div class="flex gap-3 flex-wrap">
               <input
                 v-model="formData.terminationDate"
@@ -110,7 +145,9 @@
                 :readonly="!isEditMode"
                 :class="[
                   'flex-1 px-4 py-2.5 border rounded-lg transition-all',
-                  isEditMode ? 'border-red-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white' : 'border-red-200 bg-red-50 text-gray-700 cursor-default',
+                  isEditMode
+                    ? 'border-red-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white'
+                    : 'border-red-200 bg-red-50 text-gray-700 cursor-default',
                 ]"
               />
               <button
@@ -131,7 +168,10 @@
         </div>
 
         <!-- Action Buttons (Edit Mode) -->
-        <div v-if="isEditMode" class="flex flex-col sm:flex-row sm:justify-between gap-3 pt-6 mt-6 border-t border-gray-200">
+        <div
+          v-if="isEditMode"
+          class="flex flex-col sm:flex-row sm:justify-between gap-3 pt-6 mt-6 border-t border-gray-200"
+        >
           <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
             <button
               type="submit"
@@ -192,15 +232,6 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const emit = defineEmits<{
-  save: [data: EmployeeFormData]
-  cancel: []
-  edit: []
-  back: []
-  delete: [id: string]
-}>()
-
-// Initialize form data directly from props (no watcher needed!)
 const formData = reactive<EmployeeFormData>({
   fullName: props.employee?.fullName ?? '',
   occupation: props.employee?.occupation ?? '',
@@ -208,6 +239,14 @@ const formData = reactive<EmployeeFormData>({
   dateOfEmployment: (props.employee?.dateOfEmployment ?? '') as ISODate,
   terminationDate: props.employee?.terminationDate ?? null,
 })
+
+const emit = defineEmits<{
+  save: [data: EmployeeFormData]
+  cancel: []
+  edit: []
+  back: []
+  delete: [id: string]
+}>()
 
 // Clear termination date
 const clearTerminationDate = () => {

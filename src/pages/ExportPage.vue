@@ -120,6 +120,9 @@ import { useEmployeeStore } from '@/store/employee'
 import DefaultLayout from '@/components/layouts/DefaultLayout.vue'
 import type { Employee } from '@/types/employee'
 
+import CloudUpIcon from '@/icons/cloud-up.svg';
+import CloudDownIcon from '@/icons/cloud-down.svg'
+
 const employeeStore = useEmployeeStore()
 const fileInput = ref<HTMLInputElement | null>(null)
 const selectedFile = ref<File | null>(null)

@@ -136,7 +136,7 @@ const showMessage = (msg: string, type: 'success' | 'error') => {
 
 const exportData = () => {
   try {
-    // Create Blod url with json data
+    // Create Blob url with json data
     const dataStr = JSON.stringify(employeeStore.employees, null, 2)
     const blob = new Blob([dataStr], { type: 'application/json' })
     const url = URL.createObjectURL(blob)

@@ -23,6 +23,7 @@
       </CreateEmployeeForm>
       <EditViewEmployeeForm
         v-else
+        :key="`${employeeId}-${mode}`"
         @delete="deleteEmployee"
         @back="goHome"
         @edit="goToEditMode"
@@ -103,6 +104,7 @@ const cancelEdit = () => {
   if (props.mode === 'create') {
     router.push('/')
   } else {
+    console.log('Push')
     router.push(`/employee/${employeeId.value}`)
   }
 }

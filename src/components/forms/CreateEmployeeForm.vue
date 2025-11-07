@@ -13,8 +13,12 @@
               v-model="form.code"
               type="text"
               class="input-code-editable"
+              :class="{ 'border-red-500': errors.code }"
               required
             />
+            <p v-if="errors.code" class="text-xs text-red-600 mt-1">
+              {{ errors.code }}
+            </p>
           </div>
 
           <!-- Main Fields -->
@@ -28,8 +32,12 @@
                 v-model="form.fullName"
                 type="text"
                 class="input-editable"
+                :class="{ 'border-red-500': errors.fullName }"
                 required
               />
+              <p v-if="errors.fullName" class="text-xs text-red-600 mt-1">
+                {{ errors.fullName }}
+              </p>
             </div>
 
             <!-- Occupation -->
@@ -41,8 +49,12 @@
                 v-model="form.occupation"
                 type="text"
                 class="input-editable"
+                :class="{ 'border-red-500': errors.occupation }"
                 required
               />
+              <p v-if="errors.occupation" class="text-xs text-red-600 mt-1">
+                {{ errors.occupation }}
+              </p>
             </div>
 
             <!-- Department -->
@@ -54,8 +66,12 @@
                 v-model="form.department"
                 type="text"
                 class="input-editable"
+                :class="{ 'border-red-500': errors.department }"
                 required
               />
+              <p v-if="errors.department" class="text-xs text-red-600 mt-1">
+                {{ errors.department }}
+              </p>
             </div>
 
             <!-- Date of Employment -->
@@ -67,8 +83,15 @@
                 v-model="form.dateOfEmployment"
                 type="date"
                 class="input-editable"
+                :class="{ 'border-red-500': errors.dateOfEmployment }"
                 required
               />
+              <p
+                v-if="errors.dateOfEmployment"
+                class="text-xs text-red-600 mt-1"
+              >
+                {{ errors.dateOfEmployment }}
+              </p>
             </div>
           </div>
 
@@ -80,6 +103,7 @@
                 v-model="form.terminationDate"
                 type="date"
                 class="input-termination-editable"
+                :class="{ 'border-red-500': errors.terminationDate }"
               />
               <button
                 v-if="form.terminationDate"
@@ -91,6 +115,9 @@
                 Clear
               </button>
             </div>
+            <p v-if="errors.terminationDate" class="text-xs text-red-600 mt-2">
+              {{ errors.terminationDate }}
+            </p>
             <p class="text-xs text-red-600 mt-2 flex items-center gap-1">
               <InfoIcon class="w-4 h-4" />
               <span>Leave empty if employee is still active</span>
@@ -116,6 +143,7 @@
 import { reactive } from 'vue'
 import type { Employee, ISODate, EmployeeFormData } from '@/types/employee'
 import InfoIcon from '@/icons/info.svg'
+import { employeeSchema } from '@/schemas/schema'
 
 interface Props {
   employee: Employee | null | undefined
@@ -138,18 +166,24 @@ const form = reactive<EmployeeFormData & { code: string }>({
   terminationDate: props.employee?.terminationDate ?? null,
 })
 
+const errors = reactive<Record<string, string>>({})
+
 const clearTerminationDate = () => {
   form.terminationDate = null
 }
 
 const handleSubmit = () => {
-  emit('create', {
-    code: form.code,
-    fullName: form.fullName,
-    occupation: form.occupation,
-    department: form.department,
-    dateOfEmployment: form.dateOfEmployment,
-    terminationDate: form.terminationDate || null,
-  })
+  const result = employeeSchema.safeParse(form)
+
+  if (!result.success) {
+    // Clear errors and set new ones
+    Object.keys(errors).forEach((key) => delete errors[key])
+    result.error.issues.forEach((issue) => {
+      if (issue.path[0]) errors[issue.path[0] as string] = issue.message
+    })
+    return
+  }
+
+  emit('create', result.data as EmployeeFormData & { code: string })
 }
 </script>

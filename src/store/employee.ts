@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { Employee } from '@/types/employee'
+import { isDateInFuture } from '@/helpers'
 
 // Static, bundled. Avoiding fetch requests. If the file was in
 // public or an actual api call, would be best to make a fetch action
@@ -13,6 +14,20 @@ export const useEmployeeStore = defineStore('employee', () => {
     const set = new Set<string>()
     for (const e of employees.value) set.add(e.department)
     return Array.from(set).sort()
+  })
+
+  // Active employee count that dont have a termiantion date or to be terminated
+  const activeEmployees = computed(() => {
+    return employees.value.filter(
+      (emp) => !emp.terminationDate || isDateInFuture(emp.terminationDate)
+    ).length
+  })
+
+  // Terminated employees that already been terminated, not to be terminated
+  const terminatedEmployees = computed(() => {
+    return employees.value.filter(
+      (emp) => emp.terminationDate && !isDateInFuture(emp.terminationDate)
+    ).length
   })
 
   const updateEmployee = (
@@ -63,6 +78,8 @@ export const useEmployeeStore = defineStore('employee', () => {
   return {
     employees,
     departments,
+    activeEmployees,
+    terminatedEmployees,
     updateEmployee,
     deleteEmployee,
     createEmployee,

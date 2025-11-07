@@ -26,9 +26,15 @@
                 v-model="form.fullName"
                 type="text"
                 :readonly="isView"
-                :class="standardInputClass"
+                :class="[
+                  standardInputClass,
+                  { 'border-red-500': errors.fullName },
+                ]"
                 required
               />
+              <p v-if="errors.fullName" class="text-xs text-red-600 mt-1">
+                {{ errors.fullName }}
+              </p>
             </div>
 
             <!-- Occupation -->
@@ -40,9 +46,15 @@
                 v-model="form.occupation"
                 type="text"
                 :readonly="isView"
-                :class="standardInputClass"
+                :class="[
+                  standardInputClass,
+                  { 'border-red-500': errors.occupation },
+                ]"
                 required
               />
+              <p v-if="errors.occupation" class="text-xs text-red-600 mt-1">
+                {{ errors.occupation }}
+              </p>
             </div>
 
             <!-- Department -->
@@ -54,9 +66,15 @@
                 v-model="form.department"
                 type="text"
                 :readonly="isView"
-                :class="standardInputClass"
+                :class="[
+                  standardInputClass,
+                  { 'border-red-500': errors.department },
+                ]"
                 required
               />
+              <p v-if="errors.department" class="text-xs text-red-600 mt-1">
+                {{ errors.department }}
+              </p>
             </div>
 
             <!-- Date of Employment -->
@@ -68,9 +86,18 @@
                 v-model="form.dateOfEmployment"
                 type="date"
                 :readonly="isView"
-                :class="standardInputClass"
+                :class="[
+                  standardInputClass,
+                  { 'border-red-500': errors.dateOfEmployment },
+                ]"
                 required
               />
+              <p
+                v-if="errors.dateOfEmployment"
+                class="text-xs text-red-600 mt-1"
+              >
+                {{ errors.dateOfEmployment }}
+              </p>
             </div>
           </div>
 
@@ -82,11 +109,12 @@
                 v-model="form.terminationDate"
                 type="date"
                 :readonly="isView"
-                :class="
+                :class="[
                   isView
                     ? 'input-termination-readonly'
-                    : 'input-termination-editable'
-                "
+                    : 'input-termination-editable',
+                  { 'border-red-500': errors.terminationDate },
+                ]"
               />
               <button
                 v-if="!isView && form.terminationDate"
@@ -98,6 +126,9 @@
                 Clear
               </button>
             </div>
+            <p v-if="errors.terminationDate" class="text-xs text-red-600 mt-2">
+              {{ errors.terminationDate }}
+            </p>
             <p class="text-xs text-red-600 mt-2 flex items-center gap-1">
               <InfoIcon class="w-4 h-4" />
               <span>Leave empty if employee is still active</span>
@@ -145,6 +176,7 @@
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
 import type { Employee, ISODate, EmployeeFormData } from '@/types/employee'
+import { employeeSchema } from '@/schemas/schema'
 import InfoIcon from '@/icons/info.svg'
 
 interface Props {
@@ -172,6 +204,8 @@ const form = reactive<EmployeeFormData & { code: string }>({
   terminationDate: props.employee?.terminationDate ?? null,
 })
 
+const errors = reactive<Record<string, string>>({})
+
 const isEdit = computed(() => props.mode === 'edit')
 const isView = computed(() => props.mode === 'view')
 
@@ -184,13 +218,17 @@ const clearTerminationDate = () => {
 }
 
 const handleSubmit = () => {
-  emit('save', {
-    code: form.code,
-    fullName: form.fullName,
-    occupation: form.occupation,
-    department: form.department,
-    dateOfEmployment: form.dateOfEmployment,
-    terminationDate: form.terminationDate || null,
-  })
+  const result = employeeSchema.safeParse(form)
+
+  if (!result.success) {
+    // Clear errors and set new ones
+    Object.keys(errors).forEach((key) => delete errors[key])
+    result.error.issues.forEach((issue) => {
+      if (issue.path[0]) errors[issue.path[0] as string] = issue.message
+    })
+    return
+  }
+
+  emit('save', result.data as EmployeeFormData & { code: string })
 }
 </script>

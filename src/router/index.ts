@@ -6,6 +6,7 @@ import LoginPage from '@/pages/LoginPage.vue'
 import ExportPage from '@/pages/ExportPage.vue'
 import ProfilePage from '@/pages/ProfilePage.vue'
 import EmployeePage from '@/pages/EmployeePage.vue'
+import NotFoundPage from '@/pages/NotFoundPage.vue'
 
 // By default, we always need auth, except login page
 const routes: RouteRecordRaw[] = [
@@ -40,6 +41,13 @@ const routes: RouteRecordRaw[] = [
     path: '/employee/:id',
     component: EmployeePage,
     props: { mode: 'view' },
+  },
+  // 404 catchall route (must be last)
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFoundPage,
+    meta: { requiresAuth: false },
   },
 ]
 

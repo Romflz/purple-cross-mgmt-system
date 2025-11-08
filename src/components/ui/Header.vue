@@ -203,7 +203,7 @@ const vendoreStore = useVendorStore()
 
 const mobileMenuOpen = ref(false)
 
-function handleLogout() {
+const handleLogout = () => {
   authStore.logout()
   router.push('/login')
   mobileMenuOpen.value = false

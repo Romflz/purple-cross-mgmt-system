@@ -104,7 +104,7 @@ const emit = defineEmits<{
 const username = ref('')
 const password = ref('')
 
-function handleSubmit() {
+const handleSubmit = () => {
   emit('submit', username.value, password.value)
 }
 </script>

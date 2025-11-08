@@ -1,4 +1,5 @@
 import type { Employee, EmployeeStatus } from '@/types/employee'
+import { router } from '@/router'
 
 const isDateInFuture = (endOfEmploymentDate: string) => {
   return new Date(endOfEmploymentDate) > new Date()
@@ -21,7 +22,7 @@ const getInitials = (name: string) => {
     .slice(0, 2)
 }
 
-function getStatus(e: Employee): EmployeeStatus {
+const getStatus = (e: Employee): EmployeeStatus => {
   const startFuture = isDateInFuture(e.dateOfEmployment)
   const hasEnd = !!e.terminationDate
   const endFuture = hasEnd && isDateInFuture(e.terminationDate!)
@@ -33,4 +34,14 @@ function getStatus(e: Employee): EmployeeStatus {
   return 'active'
 }
 
-export { isDateInFuture, formatDate, getInitials, getStatus }
+const goHome = (isLoggedIn?: boolean) => {
+  isLoggedIn ? router.push('/') : router.push('/login')
+}
+
+export {
+  isDateInFuture,
+  formatDate,
+  getInitials,
+  getStatus,
+  goHome,
+}

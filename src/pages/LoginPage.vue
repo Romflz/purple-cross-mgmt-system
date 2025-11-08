@@ -16,7 +16,7 @@ const authStore = useAuthStore()
 const error = ref('')
 const loading = ref(false)
 
-async function handleLogin(username: string, password: string) {
+const handleLogin = async (username: string, password: string) => {
   error.value = ''
   loading.value = true
 

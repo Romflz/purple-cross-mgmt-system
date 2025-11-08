@@ -221,7 +221,7 @@ const remainingCount = computed(() => {
   return filteredSorted.value.length - paginatedEmployees.value.length
 })
 
-function showMore() {
+const showMore = () => {
   if (hasMore.value) {
     currentPage.value++
   }
@@ -232,7 +232,7 @@ watch([search, filterDepartment, filterTerminated, sortBy, sortDir], () => {
   currentPage.value = 1
 })
 
-function resetFilters() {
+const resetFilters = () => {
   search.value = ''
   filterDepartment.value = 'all'
   filterTerminated.value = 'all'

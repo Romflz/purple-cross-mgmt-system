@@ -17,13 +17,8 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/store/auth'
+import { goHome } from '@/helpers'
 
-const router = useRouter()
 const authStore = useAuthStore()
-
-const goHome = () => {
-  authStore.loggedIn ? router.push('/') : router.push('/login')
-}
 </script>

@@ -41,6 +41,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { computed, ref } from 'vue'
 import { useEmployeeStore } from '@/store/employee'
 import { useModalStore } from '@/store/modal'
+import { goHome } from '@/helpers'
 
 import CreateEmployeeForm from '@/components/forms/CreateEmployeeForm.vue'
 import DefaultLayout from '@/components/layouts/DefaultLayout.vue'
@@ -112,10 +113,5 @@ const cancelEdit = () => {
 // Switch to edit mode
 const goToEditMode = () => {
   router.push(`/employee/${employeeId.value}/edit`)
-}
-
-// Go back to employee list
-const goHome = () => {
-  router.push('/')
 }
 </script>

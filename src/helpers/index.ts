@@ -1,5 +1,6 @@
 import type { Employee, EmployeeStatus } from '@/types/employee'
 import { router } from '@/router'
+import { useAuthStore } from '@/store/auth'
 
 const isDateInFuture = (endOfEmploymentDate: string) => {
   return new Date(endOfEmploymentDate) > new Date()
@@ -34,14 +35,9 @@ const getStatus = (e: Employee): EmployeeStatus => {
   return 'active'
 }
 
-const goHome = (isLoggedIn?: boolean) => {
-  isLoggedIn ? router.push('/') : router.push('/login')
+const goHome = () => {
+  const authStore = useAuthStore()
+  authStore.loggedIn ? router.push('/') : router.push('/login')
 }
 
-export {
-  isDateInFuture,
-  formatDate,
-  getInitials,
-  getStatus,
-  goHome,
-}
+export { isDateInFuture, formatDate, getInitials, getStatus, goHome }

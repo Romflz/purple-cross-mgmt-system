@@ -175,7 +175,7 @@
 
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
-import type { Employee, ISODate, EmployeeFormData } from '@/types/employee'
+import type { Employee, ISODate } from '@/types/employee'
 import { employeeSchema } from '@/schemas/schema'
 import InfoIcon from '@/icons/info.svg'
 
@@ -187,7 +187,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  save: [data: EmployeeFormData & { code: string }]
+  save: [data: Employee & { code: string }]
   cancel: []
   edit: []
   back: []
@@ -195,7 +195,7 @@ const emit = defineEmits<{
 }>()
 
 // Initialize
-const form = reactive<EmployeeFormData & { code: string }>({
+const form = reactive<Employee & { code: string }>({
   code: props.employee?.code ?? '',
   fullName: props.employee?.fullName ?? '',
   occupation: props.employee?.occupation ?? '',
@@ -229,6 +229,6 @@ const handleSubmit = () => {
     return
   }
 
-  emit('save', result.data as EmployeeFormData & { code: string })
+  emit('save', result.data as Employee & { code: string })
 }
 </script>

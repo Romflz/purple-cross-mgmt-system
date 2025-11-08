@@ -17,13 +17,4 @@ export type EmployeeStatus =
   | 'leaving'
   | 'left'
 
-export interface EmployeeFormData {
-  code: string,
-  fullName: string
-  occupation: string
-  department: string
-  dateOfEmployment: ISODate
-  terminationDate: ISODate | null
-}
-
 export type Modes = 'view' | 'edit' | 'create'

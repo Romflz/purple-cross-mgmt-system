@@ -45,7 +45,7 @@ import { useModalStore } from '@/store/modal'
 import CreateEmployeeForm from '@/components/forms/CreateEmployeeForm.vue'
 import DefaultLayout from '@/components/layouts/DefaultLayout.vue'
 import EditViewEmployeeForm from '@/components/forms/EditViewEmployeeForm.vue'
-import type { EmployeeFormData, Modes } from '@/types/employee'
+import type { Employee, Modes } from '@/types/employee'
 
 const props = defineProps<{
   mode: Modes
@@ -68,7 +68,7 @@ const employee = computed(() => {
 })
 
 // Save employee changes
-const saveEmployee = (data: EmployeeFormData) => {
+const saveEmployee = (data: Employee) => {
   if (props.mode === 'create') {
     const response = employeeStore.createEmployee(data)
 

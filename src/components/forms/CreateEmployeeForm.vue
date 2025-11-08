@@ -141,7 +141,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import type { Employee, ISODate, EmployeeFormData } from '@/types/employee'
+import type { Employee, ISODate } from '@/types/employee'
 import InfoIcon from '@/icons/info.svg'
 import { employeeSchema } from '@/schemas/schema'
 
@@ -152,12 +152,12 @@ interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  create: [data: EmployeeFormData & { code: string }]
+  create: [data: Employee & { code: string }]
   cancel: []
 }>()
 
 // Initialize
-const form = reactive<EmployeeFormData & { code: string }>({
+const form = reactive<Employee & { code: string }>({
   code: props.employee?.code ?? '',
   fullName: props.employee?.fullName ?? '',
   occupation: props.employee?.occupation ?? '',
@@ -184,6 +184,6 @@ const handleSubmit = () => {
     return
   }
 
-  emit('create', result.data as EmployeeFormData & { code: string })
+  emit('create', result.data as Employee & { code: string })
 }
 </script>
